@@ -19,6 +19,11 @@ public abstract class DialogModel {
 
 	//serializable members
 	protected String name;
+	protected int global_politeness=3; //default value
+	protected int global_formality=3;  //default value
+	protected String global_language="en"; //default value
+	protected String start_task_name;
+	protected String strategy;
 	protected ArrayList<Task> tasks;
 	
 	//Constructors
@@ -41,6 +46,46 @@ public abstract class DialogModel {
 		this.name = name;
 	}
 
+	public int getGlobal_politeness() {
+		return global_politeness;
+	}
+
+	public void setGlobal_politeness(int global_politeness) {
+		this.global_politeness = global_politeness;
+	}
+
+	public int getGlobal_formality() {
+		return global_formality;
+	}
+
+	public void setGlobal_formality(int global_formality) {
+		this.global_formality = global_formality;
+	}
+
+	public String getGlobal_language() {
+		return global_language;
+	}
+
+	public void setGlobal_language(String global_language) {
+		this.global_language = global_language;
+	}
+
+	public String getStart_task_name() {
+		return start_task_name;
+	}
+
+	public void setStart_task_name(String start_task_name) {
+		this.start_task_name = start_task_name;
+	}
+
+	public String getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(String strategy) {
+		this.strategy = strategy;
+	}
+
 	@XmlElementWrapper(name="tasks")
 	@XmlElement(name="task")
 	public ArrayList<Task> getTasks(){
@@ -61,6 +106,13 @@ public abstract class DialogModel {
 	public Task getTask(String name){
 		for(Task t : tasks){
 			if(t.getName().equals(name)) return t;
+		}
+		return null;
+	}
+	
+	public Task getStartTask(){
+		for(Task t : tasks){
+			if(t.getName().equals(this.start_task_name)) return t;
 		}
 		return null;
 	}
