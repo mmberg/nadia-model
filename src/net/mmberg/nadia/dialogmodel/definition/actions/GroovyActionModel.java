@@ -1,5 +1,7 @@
 package net.mmberg.nadia.dialogmodel.definition.actions;
 
+import org.eclipse.persistence.oxm.annotations.XmlCDATA;
+
 import net.mmberg.nadia.processor.dialogmodel.Action;
 
 public abstract class GroovyActionModel extends Action{
@@ -14,7 +16,7 @@ public abstract class GroovyActionModel extends Action{
 		super(template);
 	}
 	
-	//TODO CDATA
+	@XmlCDATA //not supported by JAXB, so we use MOXy instead (see jaxb.properties file)
 	public String getCode() {
 		return code;
 	}

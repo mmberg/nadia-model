@@ -1,9 +1,12 @@
 package net.mmberg.nadia.dialogmodel.definition;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.*;
 
 import net.mmberg.nadia.processor.dialogmodel.*;
 
+@XmlType(propOrder={"selector", "ITOs", "action"})
 public abstract class TaskModel {
 
 	//serializable members
@@ -11,12 +14,12 @@ public abstract class TaskModel {
 	protected String domain;
 	protected DialogAct act;
 	protected TaskSelector selector;
-	protected ITOs itos; //must not be null; otherwise unmarshalling fails
+	protected ArrayList<ITO> itos;//must not be null; otherwise unmarshalling fails
 	protected Action action;
 		
 	//Constructors
 	public TaskModel(){
-		itos=new ITOs();
+		itos=new ArrayList<ITO>();
 	}
 	
 	public TaskModel(String name){
@@ -52,6 +55,7 @@ public abstract class TaskModel {
 		this.act = act;
 	}
 
+	@XmlElementRef
 	public TaskSelector getSelector() {
 		return selector;
 	}
@@ -71,7 +75,7 @@ public abstract class TaskModel {
 
 	@XmlElementWrapper(name="itos")
 	@XmlElement(name="ito")
-	public ITOs getITOs(){
+	public ArrayList<ITO> getITOs(){
 		return itos;
 	}
 	

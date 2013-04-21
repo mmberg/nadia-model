@@ -19,7 +19,6 @@ public abstract class BagOfWordsTaskSelectorModel extends TaskSelector{
 	}
 	
 	
-	@XmlElementWrapper(name="bagOfWords")
 	@XmlElement(name="word")
 	public ArrayList<String> getWords() {
 		return words;

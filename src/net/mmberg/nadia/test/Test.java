@@ -86,7 +86,7 @@ public class Test {
 		//Task2
 		//----------------------------------------------
 		Task task2=new Task("getWeatherInformation");
-		bagOfWords = new ArrayList<String>(Arrays.asList("weather","forecast", "temperature","trip"));
+		bagOfWords = new ArrayList<String>(Arrays.asList("weather","forecast", "temperature"));
 		task2.setSelector(new BagOfWordsTaskSelector(bagOfWords));
 		gaction = new GroovyAction("The temperature in %getWeatherCity is #temperature degrees.");
 		gaction.setCode("" +

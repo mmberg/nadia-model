@@ -123,15 +123,10 @@ public abstract class DialogModel {
 	
 	//Serialization / Deserialization
 	
-//	public static void save(Dialog d){
-//		String filename = d.getName()!=null?d.getName()+".xml":"dialogue.xml";
-//		saveAs(d, filename);
-//	}
-	
 	protected void save(OutputStream stream){
 		JAXBContext context;
 		try {
-			context = JAXBContext.newInstance(Dialog.class);
+			context = JAXBContext.newInstance(Dialog.class, DialogModel.class);
 		    Marshaller m = context.createMarshaller();
 		    m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		    m.marshal((Dialog)this, stream);
@@ -159,7 +154,7 @@ public abstract class DialogModel {
 		JAXBContext context;
 		Dialog d=null;
 		try {
-			context = JAXBContext.newInstance(Dialog.class);
+			context = JAXBContext.newInstance(Dialog.class, DialogModel.class);
 			Unmarshaller um = context.createUnmarshaller();
 			d = (Dialog) um.unmarshal(new java.io.FileInputStream(path));
 		} catch (Exception e) {
@@ -173,7 +168,7 @@ public abstract class DialogModel {
 		JAXBContext context;
 		Dialog d=null;
 		try {
-			context = JAXBContext.newInstance(Dialog.class);
+			context = JAXBContext.newInstance(Dialog.class, DialogModel.class);
 			Unmarshaller um = context.createUnmarshaller();
 			d = (Dialog) um.unmarshal(new StringReader(xml));
 		} catch (Exception e) {
