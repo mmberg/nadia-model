@@ -19,7 +19,10 @@ public class Test {
 		String diaxml = d.toXML();
 		Dialog d2 = DialogModel.loadFromXml(diaxml);
 		diaxml = d2.toXML();
+		d2.saveAs("./", "dummy.xml");
 		System.out.println(diaxml);
+		
+		d2.generateSchema();
 	}
 	
 	

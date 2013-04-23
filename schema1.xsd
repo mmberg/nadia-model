@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:n="http://mmberg.net/nadia" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://mmberg.net/nadia">
+   <xsd:import schemaLocation="schema2.xsd"/>
+   <xsd:complexType name="taskSelector" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="taskSelectorModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="dialogAct">
+      <xsd:complexContent>
+         <xsd:extension base="dialogActModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="task">
+      <xsd:complexContent>
+         <xsd:extension base="taskModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ito">
+      <xsd:complexContent>
+         <xsd:extension base="itoModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="action" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="actionModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="dialog">
+      <xsd:complexContent>
+         <xsd:extension base="dialogModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="dialog" type="n:dialog"/>
+</xsd:schema>

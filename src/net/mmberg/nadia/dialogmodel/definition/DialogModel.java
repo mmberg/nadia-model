@@ -3,14 +3,19 @@ package net.mmberg.nadia.dialogmodel.definition;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.SchemaOutputResolver;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
+import javax.xml.transform.Result;
+import javax.xml.transform.stream.StreamResult;
 
 import net.mmberg.nadia.processor.dialogmodel.Dialog;
 import net.mmberg.nadia.processor.dialogmodel.Task;
@@ -129,6 +134,7 @@ public abstract class DialogModel {
 			context = JAXBContext.newInstance(Dialog.class, DialogModel.class);
 		    Marshaller m = context.createMarshaller();
 		    m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		    m.setProperty("jaxb.schemaLocation", "http://mmberg.net/nadia schema1.xsd");
 		    m.marshal((Dialog)this, stream);
 		} 
 		catch (Exception e) {
@@ -178,4 +184,23 @@ public abstract class DialogModel {
 		return d;
 	}
 	
+	//Schema generation
+	public void generateSchema(){
+		JAXBContext jc;
+		try {
+			jc = JAXBContext.newInstance(Dialog.class, DialogModel.class);
+
+			jc.generateSchema(new SchemaOutputResolver() {
+					@Override
+					public Result createOutput(String namespaceUri, String suggestedFileName)
+							throws IOException {
+			            StreamResult result = new StreamResult(new FileWriter(suggestedFileName));
+			            result.setSystemId(suggestedFileName);
+						return result;
+					}
+				});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

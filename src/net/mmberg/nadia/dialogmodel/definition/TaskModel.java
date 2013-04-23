@@ -6,17 +6,18 @@ import javax.xml.bind.annotation.*;
 
 import net.mmberg.nadia.processor.dialogmodel.*;
 
-@XmlType(propOrder={"selector", "ITOs", "action"})
+@XmlType(propOrder={"domain","act","metaselector", "ITOs", "metaaction"})
 public abstract class TaskModel {
 
 	//serializable members
 	protected String name;
 	protected String domain;
 	protected DialogAct act;
-	protected TaskSelector selector;
+	protected MetaTaskSelector metaselector;
 	protected ArrayList<ITO> itos;//must not be null; otherwise unmarshalling fails
-	protected Action action;
-		
+	protected MetaActionModel metaaction;
+
+	
 	//Constructors
 	public TaskModel(){
 		itos=new ArrayList<ITO>();
@@ -55,26 +56,27 @@ public abstract class TaskModel {
 		this.act = act;
 	}
 
-	@XmlElementRef
-	public TaskSelector getSelector() {
-		return selector;
+	@XmlElement(name="selector", required=false)
+	public MetaTaskSelector getMetaselector() {
+		return metaselector;
 	}
 
-	public void setSelector(TaskSelector selector) {
-		this.selector = selector;
+	public void setMetaselector(MetaTaskSelector metaselector) {
+		this.metaselector = metaselector;
+	}
+	
+	@XmlElement(name="action", required=false)
+	public MetaActionModel getMetaaction() {
+		return metaaction;
 	}
 
-	@XmlElementRef
-	public Action getAction() {
-		return action;
+	public void setMetaaction(MetaActionModel metaaction) {
+		this.metaaction = metaaction;
 	}
 
-	public void setAction(Action action) {
-		this.action = action;
-	}
 
-	@XmlElementWrapper(name="itos")
-	@XmlElement(name="ito")
+	@XmlElementWrapper(name="itos", required=true)
+	@XmlElement(name="ito", required=true)
 	public ArrayList<ITO> getITOs(){
 		return itos;
 	}
@@ -83,5 +85,30 @@ public abstract class TaskModel {
 	public void addITO(ITO ito){
 		this.itos.add(ito);
 	}
-		
+	
+	//non-serializable
+	
+	@XmlTransient
+	public Action getAction() {
+		//return action;
+		return getMetaaction().getAction();	
+	}
+
+	public void setAction(Action action) {
+		//this.action = action;
+		MetaActionModel mam = new MetaActionModel();
+		mam.setAction(action);
+		setMetaaction(mam);
+	}
+	
+	@XmlTransient
+	public TaskSelector getSelector() {
+		return getMetaselector().getSelector();
+	}
+
+	public void setSelector(TaskSelector selector) {
+		MetaTaskSelector mts = new MetaTaskSelector();
+		mts.setSelector(selector);
+		setMetaselector(mts);
+	}
 }

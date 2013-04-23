@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<n:dialog xsi:schemaLocation="http://mmberg.net/nadia schema1.xsd" xmlns:n="http://mmberg.net/nadia" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="dummy">
+   <global_formality>3</global_formality>
+   <global_language>en</global_language>
+   <global_politeness>3</global_politeness>
+   <tasks>
+      <task name="start">
+         <selector>
+            <bagOfWordsTaskSelector>
+               <word>hello</word>
+            </bagOfWordsTaskSelector>
+         </selector>
+         <itos>
+            <ito name="welcome">
+               <AQD>
+                  <type>
+                     <answerType>open_ended</answerType>
+                  </type>
+               </AQD>
+               <fallback_question>Hello! How may I help you?</fallback_question>
+               <group>0</group>
+               <index>0</index>
+               <required>false</required>
+               <useLG>false</useLG>
+            </ito>
+         </itos>
+      </task>
+      <task name="getTripInformation">
+         <selector>
+            <bagOfWordsTaskSelector>
+               <word>travel</word>
+               <word>book</word>
+               <word>journey</word>
+               <word>trip</word>
+            </bagOfWordsTaskSelector>
+         </selector>
+         <itos>
+            <ito name="getDepartureCity">
+               <AQD>
+                  <type>
+                     <answerType>fact.named_entity.non_animated.location.city</answerType>
+                  </type>
+               </AQD>
+               <fallback_question>Where do you want to start?</fallback_question>
+               <group>0</group>
+               <index>0</index>
+               <required>false</required>
+               <useLG>false</useLG>
+            </ito>
+            <ito name="getDestinationCity">
+               <AQD>
+                  <type>
+                     <answerType>fact.named_entity.non_animated.location.city</answerType>
+                  </type>
+               </AQD>
+               <fallback_question>Where do you want to go?</fallback_question>
+               <group>0</group>
+               <index>0</index>
+               <required>false</required>
+               <useLG>false</useLG>
+            </ito>
+         </itos>
+         <action>
+            <groovyAction>
+               <returnAnswer>true</returnAnswer>
+               <utteranceTemplate>This trip from %getDepartureCity to %getDestinationCity costs #price Euros.</utteranceTemplate>
+               <code><![CDATA[executionResults.put("price","257")]]></code>
+            </groovyAction>
+         </action>
+      </task>
+      <task name="getWeatherInformation">
+         <selector>
+            <bagOfWordsTaskSelector>
+               <word>weather</word>
+               <word>forecast</word>
+               <word>temperature</word>
+            </bagOfWordsTaskSelector>
+         </selector>
+         <itos>
+            <ito name="getWeatherCity">
+               <AQD>
+                  <type>
+                     <answerType>fact.named_entity.non_animated.location.city</answerType>
+                  </type>
+               </AQD>
+               <fallback_question>For which city do you want to know the weather?</fallback_question>
+               <group>0</group>
+               <index>0</index>
+               <required>false</required>
+               <useLG>false</useLG>
+            </ito>
+         </itos>
+         <action>
+            <groovyAction>
+               <returnAnswer>true</returnAnswer>
+               <utteranceTemplate>The temperature in %getWeatherCity is #temperature degrees.</utteranceTemplate>
+               <code><![CDATA[import groovyx.net.http.*
+import javax.xml.xpath.*
+def http = new HTTPBuilder('http://weather.yahooapis.com')
+http.get( path: '/forecastrss', query:[w:'2502265',u:'c'],  contentType: ContentType.XML) { resp, xml -> 
+   def temp = xml.channel.item.condition[0].@temp
+	executionResults.put("temperature",temp.toString())
+}]]></code>
+            </groovyAction>
+         </action>
+      </task>
+   </tasks>
+</n:dialog>

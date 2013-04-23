@@ -1,6 +1,6 @@
 package net.mmberg.nadia.processor.dialogmodel;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 import net.mmberg.nadia.dialogmodel.definition.*;
 
