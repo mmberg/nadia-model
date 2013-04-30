@@ -20,16 +20,24 @@ import javax.xml.transform.stream.StreamResult;
 import net.mmberg.nadia.processor.dialogmodel.Dialog;
 import net.mmberg.nadia.processor.dialogmodel.Task;
 
+@XmlType(propOrder={"name", "start_task_name", "global_language", "global_politeness","global_formality", "useSODA", "allowSwitchTasks","allowOverAnswering","allowDifferentQuestion","allowCorrection", "tasks"})
 public abstract class DialogModel {
 
 	//serializable members
-	protected String name;
+	protected String name; //ID
 	protected int global_politeness=3; //default value
 	protected int global_formality=3;  //default value
 	protected String global_language="en"; //default value
-	protected String start_task_name;
-	protected String strategy;
-	protected ArrayList<Task> tasks;
+	protected String start_task_name; //refers to the name of a task that is used as entry point
+	
+	//indirectly specify dialogue strategy (directed, mixed,...):
+	protected boolean allowSwitchTasks=true; //allow subdialogues
+	protected boolean allowOverAnswering=true; //give more than the information that has been asked for (but at least the current question)
+	protected boolean allowDifferentQuestion=true; //ignore current question and answer a different unanswered question
+	protected boolean allowCorrection=true; //change a value of an already asked question
+	
+	protected boolean useSODA=true;	//make use of dialogue acts
+	protected ArrayList<Task> tasks; //every dialogue consists of one or several tasks
 	
 	//Constructors
 	public DialogModel(){
@@ -83,12 +91,44 @@ public abstract class DialogModel {
 		this.start_task_name = start_task_name;
 	}
 
-	public String getStrategy() {
-		return strategy;
+	public boolean isAllowSwitchTasks() {
+		return allowSwitchTasks;
 	}
 
-	public void setStrategy(String strategy) {
-		this.strategy = strategy;
+	public void setAllowSwitchTasks(boolean switchTasks) {
+		this.allowSwitchTasks = switchTasks;
+	}
+
+	public boolean isAllowOverAnswering() {
+		return allowOverAnswering;
+	}
+
+	public void setAllowOverAnswering(boolean overAnswering) {
+		this.allowOverAnswering = overAnswering;
+	}
+
+	public boolean isAllowDifferentQuestion() {
+		return allowDifferentQuestion;
+	}
+
+	public void setAllowDifferentQuestion(boolean differentQuestion) {
+		this.allowDifferentQuestion = differentQuestion;
+	}
+
+	public boolean isAllowCorrection() {
+		return allowCorrection;
+	}
+
+	public void setAllowCorrection(boolean correction) {
+		this.allowCorrection = correction;
+	}
+
+	public boolean isUseSODA() {
+		return useSODA;
+	}
+
+	public void setUseSODA(boolean useSODA) {
+		this.useSODA = useSODA;
 	}
 
 	@XmlElementWrapper(name="tasks")

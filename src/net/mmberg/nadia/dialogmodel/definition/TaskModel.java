@@ -91,7 +91,10 @@ public abstract class TaskModel {
 	@XmlTransient
 	public Action getAction() {
 		//return action;
-		return getMetaaction().getAction();	
+		if(getMetaaction()!=null){
+			return getMetaaction().getAction();	
+		}
+		else return null;
 	}
 
 	public void setAction(Action action) {
