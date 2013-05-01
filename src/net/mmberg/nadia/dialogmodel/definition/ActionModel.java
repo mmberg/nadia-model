@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 
 import net.mmberg.nadia.processor.dialogmodel.actions.*;
 
-@XmlSeeAlso ({JavaAction.class, GroovyAction.class})
+@XmlSeeAlso ({JavaAction.class, GroovyAction.class, XmlReaderAction.class})
 public abstract class ActionModel {
 
 	//serializable features
