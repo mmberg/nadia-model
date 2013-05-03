@@ -2,16 +2,18 @@ package net.mmberg.nadia.dialogmodel.definition.actions;
 
 import net.mmberg.nadia.processor.dialogmodel.Action;
 
-public abstract class XmlReaderActionModel extends Action{
+public abstract class HTTPActionModel extends Action{
 	
 	protected String url;
+	protected String params;
+	protected String method;
 	protected String xpath;
 	
-	public XmlReaderActionModel() {
+	public HTTPActionModel() {
 		super();
 	}
 
-	public XmlReaderActionModel(String template){
+	public HTTPActionModel(String template){
 		super(template);
 	}
 	
@@ -21,6 +23,22 @@ public abstract class XmlReaderActionModel extends Action{
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
+	}
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
 	}
 
 	public String getXpath() {
