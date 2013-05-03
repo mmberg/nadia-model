@@ -12,7 +12,7 @@ public abstract class TaskModel {
 	//serializable members
 	protected String name;
 	protected String domain;
-	protected DialogAct act;
+	protected String act;
 	protected MetaTaskSelector metaselector;
 	protected ArrayList<ITO> itos;//must not be null; otherwise unmarshalling fails
 	protected MetaActionModel metaaction;
@@ -48,11 +48,11 @@ public abstract class TaskModel {
 		this.domain = domain;
 	}
 
-	public DialogAct getAct() {
+	public String getAct() {
 		return act;
 	}
 
-	public void setAct(DialogAct act) {
+	public void setAct(String act) {
 		this.act = act;
 	}
 
