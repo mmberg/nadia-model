@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.*;
 
 import net.mmberg.nadia.processor.dialogmodel.*;
 
-@XmlType(propOrder={"domain","act","metaselector", "ITOs", "metaaction"})
+@XmlType(propOrder={"domain","act","metaselector", "ITOs", "metaaction","followup"})
 public abstract class TaskModel {
 
 	//serializable members
@@ -16,6 +16,7 @@ public abstract class TaskModel {
 	protected MetaTaskSelector metaselector;
 	protected ArrayList<ITO> itos;//must not be null; otherwise unmarshalling fails
 	protected MetaActionModel metaaction;
+	protected FollowUp followup;
 
 	
 	//Constructors
@@ -81,6 +82,14 @@ public abstract class TaskModel {
 		return itos;
 	}
 	
+	public FollowUp getFollowup() {
+		return followup;
+	}
+
+	public void setFollowup(FollowUp followup) {
+		this.followup = followup;
+	}
+	
 	//Helpers	
 	public void addITO(ITO ito){
 		this.itos.add(ito);
@@ -98,7 +107,6 @@ public abstract class TaskModel {
 	}
 
 	public void setAction(Action action) {
-		//this.action = action;
 		MetaActionModel mam = new MetaActionModel();
 		mam.setAction(action);
 		setMetaaction(mam);
