@@ -11,7 +11,7 @@
    <xsd:complexType name="taskModel" abstract="true">
       <xsd:sequence>
          <xsd:element name="domain" type="xsd:string" minOccurs="0"/>
-         <xsd:element name="act" type="ns0:dialogAct" minOccurs="0"/>
+         <xsd:element name="act" type="xsd:string" minOccurs="0"/>
          <xsd:element name="selector" type="metaTaskSelector" minOccurs="0"/>
          <xsd:element name="itos">
             <xsd:complexType>
@@ -21,22 +21,15 @@
             </xsd:complexType>
          </xsd:element>
          <xsd:element name="action" type="metaActionModel" minOccurs="0"/>
+         <xsd:element name="followup" type="ns0:followUp" minOccurs="0"/>
       </xsd:sequence>
       <xsd:attribute name="name" type="xsd:string"/>
    </xsd:complexType>
-   <xsd:complexType name="taskSelectorModel" abstract="true"/>
    <xsd:complexType name="aqdContextModel" abstract="true">
       <xsd:sequence>
          <xsd:element name="reference" type="xsd:string" minOccurs="0"/>
          <xsd:element name="specification" type="xsd:string" minOccurs="0"/>
       </xsd:sequence>
-   </xsd:complexType>
-   <xsd:complexType name="javaAction">
-      <xsd:complexContent>
-         <xsd:extension base="javaActionModel">
-            <xsd:sequence/>
-         </xsd:extension>
-      </xsd:complexContent>
    </xsd:complexType>
    <xsd:complexType name="javaActionModel" abstract="true">
       <xsd:complexContent>
@@ -48,17 +41,21 @@
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
-   <xsd:complexType name="dialogActModel" abstract="true"/>
-   <xsd:complexType name="bagOfWordsTaskSelector">
+   <xsd:complexType name="httpActionModel" abstract="true">
       <xsd:complexContent>
-         <xsd:extension base="bagOfWordsTaskSelectorModel">
-            <xsd:sequence/>
+         <xsd:extension base="ns0:action">
+            <xsd:sequence>
+               <xsd:element name="method" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="params" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="url" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="xpath" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
-   <xsd:complexType name="aqdContext">
+   <xsd:complexType name="bagOfWordsTaskSelector">
       <xsd:complexContent>
-         <xsd:extension base="aqdContextModel">
+         <xsd:extension base="bagOfWordsTaskSelectorModel">
             <xsd:sequence/>
          </xsd:extension>
       </xsd:complexContent>
@@ -79,15 +76,79 @@
    <xsd:complexType name="metaActionModel">
       <xsd:sequence>
          <xsd:choice>
+            <xsd:element ref="httpAction"/>
             <xsd:element ref="javaAction"/>
             <xsd:element ref="groovyAction"/>
          </xsd:choice>
       </xsd:sequence>
    </xsd:complexType>
-   <xsd:complexType name="metaTaskSelector">
+   <xsd:complexType name="aqdTypeModel" abstract="true">
       <xsd:sequence>
-         <xsd:element ref="bagOfWordsTaskSelector"/>
+         <xsd:element name="answerType" type="xsd:string" minOccurs="0"/>
       </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="httpAction">
+      <xsd:complexContent>
+         <xsd:extension base="httpActionModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="dialogModel" abstract="true">
+      <xsd:sequence>
+         <xsd:element name="start_task_name" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="global_language" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="global_politeness" type="xsd:int"/>
+         <xsd:element name="global_formality" type="xsd:int"/>
+         <xsd:element name="useSODA" type="xsd:boolean"/>
+         <xsd:element name="allowSwitchTasks" type="xsd:boolean"/>
+         <xsd:element name="allowOverAnswering" type="xsd:boolean"/>
+         <xsd:element name="allowDifferentQuestion" type="xsd:boolean"/>
+         <xsd:element name="allowCorrection" type="xsd:boolean"/>
+         <xsd:element name="tasks" minOccurs="0">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="task" type="ns0:task" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string"/>
+   </xsd:complexType>
+   <xsd:complexType name="bagOfWordsTaskSelectorModel" abstract="true">
+      <xsd:complexContent>
+         <xsd:extension base="ns0:taskSelector">
+            <xsd:sequence>
+               <xsd:element name="word" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="taskSelectorModel" abstract="true"/>
+   <xsd:complexType name="javaAction">
+      <xsd:complexContent>
+         <xsd:extension base="javaActionModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="adaptedMap">
+      <xsd:sequence>
+         <xsd:element name="item" type="item" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="followUpModel">
+      <xsd:sequence>
+         <xsd:element name="ito" type="ns0:ito" minOccurs="0"/>
+         <xsd:element name="answerMapping" type="adaptedMap" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="aqdContext">
+      <xsd:complexContent>
+         <xsd:extension base="aqdContextModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
    </xsd:complexType>
    <xsd:complexType name="aqdForm">
       <xsd:complexContent>
@@ -96,9 +157,9 @@
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
-   <xsd:complexType name="aqdTypeModel" abstract="true">
+   <xsd:complexType name="metaTaskSelector">
       <xsd:sequence>
-         <xsd:element name="answerType" type="xsd:string" minOccurs="0"/>
+         <xsd:element ref="bagOfWordsTaskSelector"/>
       </xsd:sequence>
    </xsd:complexType>
    <xsd:complexType name="groovyActionModel" abstract="true">
@@ -128,36 +189,17 @@
       </xsd:sequence>
       <xsd:attribute name="name" type="xsd:string"/>
    </xsd:complexType>
-   <xsd:complexType name="dialogModel" abstract="true">
-      <xsd:sequence>
-         <xsd:element name="global_formality" type="xsd:int"/>
-         <xsd:element name="global_language" type="xsd:string" minOccurs="0"/>
-         <xsd:element name="global_politeness" type="xsd:int"/>
-         <xsd:element name="start_task_name" type="xsd:string" minOccurs="0"/>
-         <xsd:element name="strategy" type="xsd:string" minOccurs="0"/>
-         <xsd:element name="tasks" minOccurs="0">
-            <xsd:complexType>
-               <xsd:sequence>
-                  <xsd:element name="task" type="ns0:task" minOccurs="0" maxOccurs="unbounded"/>
-               </xsd:sequence>
-            </xsd:complexType>
-         </xsd:element>
-      </xsd:sequence>
-      <xsd:attribute name="name" type="xsd:string"/>
+   <xsd:complexType name="item">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="key" type="xsd:string"/>
+         </xsd:extension>
+      </xsd:simpleContent>
    </xsd:complexType>
    <xsd:complexType name="aqdType">
       <xsd:complexContent>
          <xsd:extension base="aqdTypeModel">
             <xsd:sequence/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   <xsd:complexType name="bagOfWordsTaskSelectorModel" abstract="true">
-      <xsd:complexContent>
-         <xsd:extension base="ns0:taskSelector">
-            <xsd:sequence>
-               <xsd:element name="word" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-            </xsd:sequence>
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
@@ -170,5 +212,7 @@
    </xsd:complexType>
    <xsd:element name="groovyAction" type="groovyAction"/>
    <xsd:element name="javaAction" type="javaAction"/>
+   <xsd:element name="httpAction" type="httpAction"/>
    <xsd:element name="bagOfWordsTaskSelector" type="bagOfWordsTaskSelector"/>
+   <xsd:element name="followUpModel" type="followUpModel"/>
 </xsd:schema>

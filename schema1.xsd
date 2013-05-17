@@ -8,13 +8,6 @@
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
-   <xsd:complexType name="dialogAct">
-      <xsd:complexContent>
-         <xsd:extension base="dialogActModel">
-            <xsd:sequence/>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
    <xsd:complexType name="task">
       <xsd:complexContent>
          <xsd:extension base="taskModel">
@@ -39,6 +32,13 @@
    <xsd:complexType name="dialog">
       <xsd:complexContent>
          <xsd:extension base="dialogModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="followUp">
+      <xsd:complexContent>
+         <xsd:extension base="followUpModel">
             <xsd:sequence/>
          </xsd:extension>
       </xsd:complexContent>

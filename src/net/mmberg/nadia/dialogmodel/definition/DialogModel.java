@@ -1,12 +1,12 @@
 package net.mmberg.nadia.dialogmodel.definition;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.xml.bind.JAXBContext;
@@ -184,8 +184,9 @@ public abstract class DialogModel {
 	
 	public void saveAs(String path, String filename){
 		try {
-			save(new FileOutputStream(path+"/"+filename));
-		} catch (FileNotFoundException e) {
+			URL p=new URL(path);
+			save(new FileOutputStream(p.getPath()+"/"+filename));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -202,7 +203,9 @@ public abstract class DialogModel {
 		try {
 			context = JAXBContext.newInstance(Dialog.class, DialogModel.class);
 			Unmarshaller um = context.createUnmarshaller();
-			d = (Dialog) um.unmarshal(new java.io.FileInputStream(path));
+			String p=new URL(path).getPath();
+			d = (Dialog) um.unmarshal(new java.io.FileInputStream(p));
+			System.err.println("loaded dialogue "+path);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
