@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -38,6 +39,8 @@ public abstract class DialogModel {
 	
 	protected boolean useSODA=true;	//make use of dialogue acts
 	protected ArrayList<Task> tasks; //every dialogue consists of one or several tasks
+	
+	private final static Logger logger = Logger.getLogger("nina-model"); 
 	
 	//Constructors
 	public DialogModel(){
@@ -205,7 +208,7 @@ public abstract class DialogModel {
 			Unmarshaller um = context.createUnmarshaller();
 			String p=new URL(path).getPath();
 			d = (Dialog) um.unmarshal(new java.io.FileInputStream(p));
-			System.err.println("loaded dialogue "+path);
+			logger.info("loaded dialogue from path "+path);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -220,6 +223,7 @@ public abstract class DialogModel {
 			context = JAXBContext.newInstance(Dialog.class, DialogModel.class);
 			Unmarshaller um = context.createUnmarshaller();
 			d = (Dialog) um.unmarshal(new StringReader(xml));
+			logger.info("loaded dialogue from user upload");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
