@@ -187,8 +187,8 @@ public abstract class DialogModel {
 	
 	public void saveAs(String path, String filename){
 		try {
-			URL p=new URL(path);
-			save(new FileOutputStream(p.getPath()+"/"+filename));
+			URL p=(path.length()==0)?new URL("file","",filename):new URL(path+"/"+filename);
+			save(new FileOutputStream(p.getPath()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -208,7 +208,7 @@ public abstract class DialogModel {
 			Unmarshaller um = context.createUnmarshaller();
 			String p=new URL(path).getPath();
 			d = (Dialog) um.unmarshal(new java.io.FileInputStream(p));
-			logger.info("loaded dialogue from path "+path);
+			logger.info("loaded dialogue from "+path);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -223,7 +223,7 @@ public abstract class DialogModel {
 			context = JAXBContext.newInstance(Dialog.class, DialogModel.class);
 			Unmarshaller um = context.createUnmarshaller();
 			d = (Dialog) um.unmarshal(new StringReader(xml));
-			logger.info("loaded dialogue from user upload");
+			logger.info("loaded dialogue from XML string (e.g. by user upload)");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

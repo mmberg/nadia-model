@@ -2,6 +2,7 @@ package net.mmberg.nadia.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import net.mmberg.nadia.dialogmodel.definition.DialogModel;
 import net.mmberg.nadia.processor.dialogmodel.*;
@@ -17,9 +18,10 @@ public class Test {
 		Test store = new Test();
 		Dialog d = store.createDummyDialog();
 		String diaxml = d.toXML();
+		System.out.println(diaxml);
 		Dialog d2 = DialogModel.loadFromXml(diaxml);
 		diaxml = d2.toXML();
-		d2.saveAs("./", "dummy.xml");
+		d2.saveAs("", "dummy.xml");
 		System.out.println(diaxml);
 		
 		d2.generateSchema();
@@ -109,8 +111,8 @@ public class Test {
 		task2.addITO(ito);
 		aqd=new AQD();
 		aqd.setType(new AQDType("fact.named_entity.non_animated.location.city"));
-		ito.setAQD(aqd);		
-		
+		ito.setAQD(aqd);				
+
 		return dialog;			
 	}	
 

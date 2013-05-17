@@ -19,13 +19,16 @@ public class MapAdapter extends XmlAdapter<MapAdapter.AdaptedMap, Map<String, St
     @Override
     public AdaptedMap marshal(Map<String, String> map) throws Exception {
         AdaptedMap adaptedMap = new AdaptedMap();
-        for(Entry<String, String> entry : map.entrySet()) {
-            Item item = new Item();
-            item.key = entry.getKey();
-            item.value = entry.getValue();
-            adaptedMap.item.add(item);
+        if(map!=null){
+	        for(Entry<String, String> entry : map.entrySet()) {
+	            Item item = new Item();
+	            item.key = entry.getKey();
+	            item.value = entry.getValue();
+	            adaptedMap.item.add(item);
+	        }
+	        return adaptedMap;
         }
-        return adaptedMap;
+        return null;
     }
 
     @Override
