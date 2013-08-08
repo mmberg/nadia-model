@@ -36,6 +36,13 @@
          </xsd:extension>
       </xsd:complexContent>
    </xsd:complexType>
+   <xsd:complexType name="actionResultMapping">
+      <xsd:complexContent>
+         <xsd:extension base="actionResultMappingModel">
+            <xsd:sequence/>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
    <xsd:complexType name="followUp">
       <xsd:complexContent>
          <xsd:extension base="followUpModel">
