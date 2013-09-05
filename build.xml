@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="nadia-model" basedir="." default="main">
+
+	<property name="src.dir"     value="src"/>
+    <property name="lib.dir"     value="lib"/>
+	
+	<property name="build.dir"   value="build"/>
+	<property name="buildjar.dir"   value="${build.dir}/jar"/>
+	
+	<property name="temp.dir"   value="${build.dir}/temp"/>
+	<property name="tempbin.dir"   value="${temp.dir}/bin"/>
+	<property name="tempsrc.dir"   value="${temp.dir}/src"/>
+	<property name="templib.dir"   value="${temp.dir}/lib"/>
+	
+  	
+    <target name="compile" description="Compiles the Task">
+    	<mkdir dir="${tempsrc.dir}/"/>
+    	<mkdir dir="${tempbin.dir}/"/>
+    	<mkdir dir="${buildjar.dir}/"/>
+    	
+    	
+    	<!-- copy global files used for jar  -->
+    	<copy todir="${templib.dir}" flatten="true">
+    		<fileset dir="${lib.dir}">
+    		        <include name="**/*"/>
+    				<exclude name="*.source*.jar"/>
+    		</fileset>
+    	</copy>
+    	
+    	<!-- compile -->
+    	
+    	<path id="javac.classpath">
+    	    <fileset dir="${templib.dir}" includes="**/*.jar"/>
+    	</path>
+    	   	
+    	<copy todir="${tempsrc.dir}" overwrite="true" force="true" flatten="false">
+    		<fileset dir="${src.dir}">
+    		        <include name="**/*"/>
+    		</fileset>
+    	</copy>
+    	
+    	<javac destdir="${tempbin.dir}" classpathref="javac.classpath" includeantruntime="false" debug="true">
+    	    <src path="${tempsrc.dir}"/>
+    	 </javac>
+    	
+    	<copy todir="${tempbin.dir}" >
+    	    <fileset dir="${tempsrc.dir}">
+    	    	<include name="**/*.properties"/>
+    	    </fileset>
+    	 </copy>
+    	
+    	<delete dir="${tempsrc.dir}" failonerror="false"/>
+    	   	
+    </target>
+
+		
+    <target name="jar" description="JARs the Task" depends="compile">
+    	<delete file="${buildjar.dir}/${ant.project.name}.jar" failonerror="false"/>
+	
+    	<!-- just choose a dir for jarfile so that the path results in "lib/...." -->
+    	<manifestclasspath property="manifest.classpath" jarfile="${temp.dir}/${ant.project.name}.jar">
+    	      <classpath refid="javac.classpath"/>
+    	</manifestclasspath>
+    		
+    	<jar destfile="${buildjar.dir}/${ant.project.name}.jar" basedir="${tempbin.dir}">
+    		<manifest>
+    			<attribute name="Main-Class" value="net.mmberg.nadia.processor.NadiaProcessor"/>
+    			<attribute name="Class-Path" value="./ ${manifest.classpath}"/>
+    	    </manifest>
+    	</jar>
+    	
+    	<!-- move jar to lib -->
+    	  <move todir="${templib.dir}">
+    	    <fileset dir="${buildjar.dir}">
+    	      <include name="*.jar"/>
+    	    </fileset>
+    	  </move>
+    	
+    	<!-- put other files outside jar -->
+    	<copy todir="${buildjar.dir}/${lib.dir}" flatten="false">
+    		<fileset dir="${templib.dir}">
+    		        <include name="**/*"/>
+    		</fileset>
+    	</copy>
+    	   	
+    </target>
+	
+
+    <target name="clean" description="Delete temp files">
+        <delete dir="${temp.dir}" failonerror="false"/>
+    </target>
+
+	<target name="main" depends="jar,clean"/>
+
+</project>
