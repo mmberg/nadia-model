@@ -44,5 +44,9 @@ public abstract class AQDModel {
 	public void setContext(AQDContext context) {
 		this.context = context;
 	}
+	
+	public void guru(){
+		
+	}
 
 }

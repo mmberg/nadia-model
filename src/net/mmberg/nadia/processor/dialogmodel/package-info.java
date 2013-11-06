@@ -1,6 +1,6 @@
 @XmlSchema(
 	    namespace = "http://mmberg.net/nadia", 
-	    xmlns={@XmlNs(namespaceURI = "http://mmberg.net/nadia", prefix = "n")},    
+	    xmlns={@XmlNs(namespaceURI = "http://mmberg.net/nadia", prefix = "n")},
 	    elementFormDefault = XmlNsForm.UNQUALIFIED,
 	    attributeFormDefault = XmlNsForm.UNQUALIFIED
 		)

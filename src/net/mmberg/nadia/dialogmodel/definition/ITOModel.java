@@ -10,7 +10,7 @@ public abstract class ITOModel {
 	protected String name;
 	protected int group;
 	protected int index;
-	protected boolean required;
+	protected boolean required=true;
 	protected AQD aqd;
 	protected String fallback_question;
 	protected boolean useLG=true;
