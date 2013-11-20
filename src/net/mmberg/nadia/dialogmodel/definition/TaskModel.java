@@ -77,7 +77,7 @@ public abstract class TaskModel {
 
 
 	@XmlElementWrapper(name="itos", required=true)
-	@XmlElement(name="ito", required=true)
+	@XmlElement(name="ito", required=false)
 	public ArrayList<ITO> getITOs(){
 		return itos;
 	}

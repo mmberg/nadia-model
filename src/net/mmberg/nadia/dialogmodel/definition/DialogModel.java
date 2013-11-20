@@ -24,6 +24,8 @@ import net.mmberg.nadia.processor.dialogmodel.Task;
 @XmlType(propOrder={"name", "start_task_name", "global_language", "global_politeness","global_formality", "useSODA", "allowSwitchTasks","allowOverAnswering","allowDifferentQuestion","allowCorrection", "tasks"})
 public abstract class DialogModel {
 
+	public final static String VERSION="1.0"; //the version of the dialogue model, i.e. version of XSD
+	
 	//serializable members
 	protected String name; //ID
 	protected int global_politeness=3; //default value
@@ -40,7 +42,7 @@ public abstract class DialogModel {
 	protected boolean useSODA=true;	//make use of dialogue acts
 	protected ArrayList<Task> tasks; //every dialogue consists of one or several tasks
 	
-	private final static Logger logger = Logger.getLogger("nina-model"); 
+	private final static Logger logger = Logger.getLogger("nadia-model"); 
 	
 	//Constructors
 	public DialogModel(){
@@ -210,6 +212,7 @@ public abstract class DialogModel {
 			d = (Dialog) um.unmarshal(new java.io.FileInputStream(p));
 			logger.info("loaded dialogue from "+path);
 		} catch (Exception e) {
+			logger.severe("Error while loading the dialogue model. Please check the file's syntax and version!");
 			e.printStackTrace();
 		}
 
@@ -225,6 +228,7 @@ public abstract class DialogModel {
 			d = (Dialog) um.unmarshal(new StringReader(xml));
 			logger.info("loaded dialogue from XML string (e.g. by user upload)");
 		} catch (Exception e) {
+			logger.severe("Error while loading the dialogue model. Please check the file's syntax and version!");
 			e.printStackTrace();
 		}
 

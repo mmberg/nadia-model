@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:ns0="http://mmberg.net/nadia" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <xsd:import schemaLocation="schema1.xsd" namespace="http://mmberg.net/nadia"/>
+<xsd:schema xmlns:ns0="http://mmberg.net/nadia/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:import schemaLocation="schema1.xsd" namespace="http://mmberg.net/nadia/1.0"/>
    <xsd:complexType name="aqdModel" abstract="true">
       <xsd:sequence>
          <xsd:element name="context" type="aqdContext" minOccurs="0"/>
@@ -16,7 +16,7 @@
          <xsd:element name="itos">
             <xsd:complexType>
                <xsd:sequence>
-                  <xsd:element name="ito" type="ns0:ito" maxOccurs="unbounded"/>
+                  <xsd:element name="ito" type="ns0:ito" minOccurs="0" maxOccurs="unbounded"/>
                </xsd:sequence>
             </xsd:complexType>
          </xsd:element>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:n="http://mmberg.net/nadia" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://mmberg.net/nadia">
+<xsd:schema xmlns:n="http://mmberg.net/nadia/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://mmberg.net/nadia/1.0">
    <xsd:import schemaLocation="schema2.xsd"/>
    <xsd:complexType name="taskSelector" abstract="true">
       <xsd:complexContent>
