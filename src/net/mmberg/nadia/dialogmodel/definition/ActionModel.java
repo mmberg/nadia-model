@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import net.mmberg.nadia.processor.dialogmodel.ActionResultMapping;
 import net.mmberg.nadia.processor.dialogmodel.actions.*;
 
-@XmlSeeAlso ({JavaAction.class, GroovyAction.class, HttpAction.class, HttpJsonAction.class, HttpXpathAction.class})
+@XmlSeeAlso ({JavaAction.class, GroovyAction.class, HttpAction.class, HttpJsonAction.class, HttpXpathAction.class, HttpTextAction.class})
 public abstract class ActionModel {
 
 	//serializable features

@@ -14,4 +14,5 @@ public abstract class HttpAction extends HttpActionModel{
 	public HttpAction(String template){
 		super(template);
 	}
+	
 }

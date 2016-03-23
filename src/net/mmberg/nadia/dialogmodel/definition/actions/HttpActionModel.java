@@ -49,5 +49,4 @@ public abstract class HttpActionModel extends Action{
 		this.query = xpath;
 	}
 	
-	protected abstract String extractResults(String content);
 }
